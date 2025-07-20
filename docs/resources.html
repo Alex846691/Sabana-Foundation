@@ -3,91 +3,212 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Learning Resources – Sabana Foundation</title>
+    <title>Learning Resources – SABANA Foundation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              background: '#0f0f0f',
-              primary: '#00ffc3',
-              accent: '#ff0055',
-              text: '#e5e5e5',
-            },
-            fontFamily: {
-              heading: ['Sora', 'Inter', 'sans-serif'],
-              body: ['Open Sans', 'Roboto', 'sans-serif'],
-            },
-          },
-        },
-      };
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Sora:wght@700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      body { font-family: 'Open Sans', 'Roboto', sans-serif; }
-      h1, h2, h3, h4 { font-family: 'Sora', 'Inter', sans-serif; }
-      .header-nav { flex-wrap: wrap; gap: 1.5rem; }
-      .header-nav a.nav-link {
-        display: block;
-        width: 100%;
-        margin: 0.25rem 0;
-        padding: 0.75rem 1rem;
-        text-align: left;
-        border-radius: 0.5rem;
-      }
-      .header-nav {
-        flex-direction: column !important;
-      }
+        * { font-family: 'Rajdhani', sans-serif; }
+        .font-cyber { font-family: 'Orbitron', monospace; }
+        .cyber-gradient {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        .neon-glow {
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+        }
+        .cyber-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .cyber-card:hover {
+            border-color: rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            transform: translateY(-5px);
+        }
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .terminal-text {
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .cyber-button {
+            background: linear-gradient(45deg, #00ffff, #0080ff);
+            color: #000;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .cyber-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
     </style>
   </head>
-  <body class="bg-background text-text min-h-screen flex flex-col" x-data="{ open: false, donateModal: false, selectedToken: 'BTC' }">
-    <div x-data="{ open: false }">
-      <!-- Header with always-visible hamburger menu -->
-      <header class="sticky top-0 z-30 w-full bg-background/90 backdrop-blur border-b border-primary/20 shadow-sm">
-        <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
-          <div class="flex items-center gap-2">
-            <span class="flex items-center gap-2">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0">
-                <defs>
-                  <linearGradient id="sabana-shield" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#00ffc3"/>
-                    <stop offset="1" stop-color="#ff0055"/>
-                  </linearGradient>
-                </defs>
-                <path d="M18 3C18 3 6 6 6 13.5C6 25.5 18 33 18 33C18 33 30 25.5 30 13.5C30 6 18 3 18 3Z" fill="url(#sabana-shield)" stroke="#00ffc3" stroke-width="2"/>
-                <path d="M18 23C15 20.5 11 17.5 13.5 14.5C15.5 12 18 14.5 18 14.5C18 14.5 20.5 12 22.5 14.5C25 17.5 21 20.5 18 23Z" fill="#0f0f0f" stroke="#ff0055" stroke-width="1.5"/>
-              </svg>
-              <span class="font-heading text-2xl text-primary font-bold tracking-tight">Sabana</span>
-            </span>
-            <span class="hidden sm:inline text-xs text-text/50 ml-2">Web3 Cybersecurity</span>
-          </div>
-          <!-- No always-visible nav on desktop; only hamburger menu shows nav -->
-          <button @click="open = true" class="p-2 rounded hover:bg-primary/10 transition focus:outline-none block" aria-label="Open menu">
-            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          </button>
+  <body class="bg-black text-white min-h-screen" x-data="{ open: false, donateModal: false, selectedToken: 'BTC' }">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-90 backdrop-blur-lg border-b border-cyan-500" x-show="!open" x-transition>
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="assets/sabana-logo.png" alt="SABANA" class="h-10 w-auto" />
+                <span class="font-cyber text-xl neon-glow">SABANA FOUNDATION</span>
+            </a>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="about.html" class="text-gray-300 hover:text-cyan-400 transition-colors font-semibold">ABOUT</a>
+                <a href="whatwedo.html" class="text-gray-300 hover:text-cyan-400 transition-colors font-semibold">SERVICES</a>
+                <a href="audits.html" class="text-gray-300 hover:text-cyan-400 transition-colors font-semibold">AUDITS</a>
+                <a href="blog.html" class="text-gray-300 hover:text-cyan-400 transition-colors font-semibold">BLOG</a>
+                <a href="contact.html" class="text-gray-300 hover:text-cyan-400 transition-colors font-semibold">CONTACT</a>
+                <button @click="donateModal = true" class="cyber-button px-6 py-2 rounded font-semibold text-black">
+                    <i class="fas fa-shield-alt mr-2"></i>DONATE
+                </button>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button @click="open = true" class="md:hidden text-cyan-400 p-2">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
         </div>
-      </header>
-      <!-- Hamburger menu overlay and nav moved below header -->
-      <div x-show="open" @keydown.escape.window="open = false" class="fixed inset-0 z-50 h-full" x-cloak>
-        <div class="absolute inset-0 bg-black/70" @click="open = false"></div>
-        <nav class="absolute right-0 top-[var(--header-height,theme(spacing.16))] w-64 bg-background border-l border-primary/20 shadow-2xl p-8 animate-slide-in flex flex-col overflow-y-auto">
-          <button @click="open = false" class="self-end mb-6 p-2 rounded hover:bg-primary/10 transition" aria-label="Close menu">
-            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-          <a href="whatwedo.html" class="font-bold text-accent flex items-center gap-2 w-full py-3 px-4 hover:bg-primary/10 rounded transition"><i data-feather="activity"></i>What We Do</a>
-          <a href="audits.html" class="font-bold text-primary flex items-center gap-2 w-full py-3 px-4 hover:bg-primary/10 rounded transition"><i data-feather="shield"></i>Audits</a>
-          <a href="impact.html" class="font-bold text-accent flex items-center gap-2 w-full py-3 px-4 hover:bg-primary/10 rounded transition"><i data-feather="heart"></i>Impact</a>
-          <a href="resources.html" class="font-bold text-primary flex items-center gap-2 w-full py-3 px-4 hover:bg-primary/10 rounded transition"><i data-feather="book-open"></i>Resources</a>
-          <a href="join.html" class="font-bold text-accent flex items-center gap-2 w-full py-3 px-4 hover:bg-primary/10 rounded transition"><i data-feather="user-plus"></i>Join</a>
-        </nav>
-      </div>
+    </nav>
+    <!-- Mobile Menu -->
+    <div x-show="open" x-transition class="fixed inset-0 z-50 md:hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-90" @click="open = false"></div>
+        <div class="absolute right-0 top-0 h-full w-80 cyber-card">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <img src="assets/sabana-logo.png" alt="SABANA" class="h-8 w-auto" />
+                    <button @click="open = false" class="text-cyan-400">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="space-y-6">
+                    <a href="about.html" class="block text-gray-300 hover:text-cyan-400 transition-colors">ABOUT</a>
+                    <a href="whatwedo.html" class="block text-gray-300 hover:text-cyan-400 transition-colors">SERVICES</a>
+                    <a href="audits.html" class="block text-gray-300 hover:text-cyan-400 transition-colors">AUDITS</a>
+                    <a href="blog.html" class="block text-gray-300 hover:text-cyan-400 transition-colors">BLOG</a>
+                    <a href="contact.html" class="block text-gray-300 hover:text-cyan-400 transition-colors">CONTACT</a>
+                    <button @click="donateModal = true; open = false" class="w-full cyber-button px-6 py-3 rounded font-semibold text-black">
+                        DONATE
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 max-w-5xl mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-cyber neon-glow mb-10 text-center">Learning Resources</h1>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Web2 Security Section -->
+            <section class="cyber-card rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-cyber neon-glow mb-4 flex items-center gap-2"><i class="fas fa-shield-alt text-cyan-400"></i> Web2 Security Resources</h2>
+                <ul class="space-y-3 text-lg">
+                    <li><i class="fas fa-book text-cyan-400"></i> The Web Application Hacker's Handbook by Dafydd Stuttard and Marcus Pinto</li>
+                    <li><i class="fas fa-book text-cyan-400"></i> Hacking: The Art of Exploitation by Jon Erickson</li>
+                    <li><i class="fas fa-book text-cyan-400"></i> OWASP Testing Guide (<a href="https://owasp.org/www-project-web-security-testing-guide/" class="text-cyan-400 hover:underline">Free online resource</a>)</li>
+                    <li><i class="fas fa-bug text-cyan-400"></i> <a href="https://portswigger.net/web-security" class="text-cyan-400 hover:underline">PortSwigger Web Security Academy</a></li>
+                    <li><i class="fas fa-bug text-cyan-400"></i> <a href="https://www.udemy.com/course/bug-bounty-hunting-essentials" class="text-cyan-400 hover:underline">Bug Bounty Hunting Essentials on Udemy</a></li>
+                    <li><i class="fas fa-bug text-cyan-400"></i> <a href="https://www.pluralsight.com/courses/web-security-testing-ethical-hacking" class="text-cyan-400 hover:underline">Web Application Penetration Testing on Pluralsight</a></li>
+                    <li><i class="fas fa-laptop-code text-cyan-400"></i> <a href="https://www.hackthebox.com/" class="text-cyan-400 hover:underline">Hack The Box</a></li>
+                    <li><i class="fas fa-network-wired text-cyan-400"></i> <a href="https://tryhackme.com/" class="text-cyan-400 hover:underline">TryHackMe</a></li>
+                    <li><i class="fas fa-flask text-cyan-400"></i> <a href="https://github.com/juice-shop/juice-shop" class="text-cyan-400 hover:underline">OWASP Juice Shop</a></li>
+                    <li><i class="fas fa-users text-cyan-400"></i> Reddit: <span class="text-cyan-400">r/netsec, r/bugbounty</span></li>
+                    <li><i class="fas fa-users text-cyan-400"></i> <a href="https://owasp.org/" class="text-cyan-400 hover:underline">OWASP Foundation</a></li>
+                    <li><i class="fas fa-bug text-cyan-400"></i> <a href="https://hackerone.com/hacktivity" class="text-cyan-400 hover:underline">HackerOne Hacktivity (Public bug reports)</a></li>
+                </ul>
+            </section>
+            <!-- Web3 Security Section -->
+            <section class="cyber-card rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-cyber neon-glow mb-4 flex items-center gap-2"><i class="fas fa-cube text-purple-400"></i> Web3 Security Resources</h2>
+                <ul class="space-y-3 text-lg">
+                    <li><i class="fas fa-book text-purple-400"></i> Mastering Ethereum by Andreas M. Antonopoulos and Gavin Wood</li>
+                    <li><i class="fas fa-book text-purple-400"></i> Building Secure Smart Contracts by Chris Anatalio</li>
+                    <li><i class="fas fa-graduation-cap text-purple-400"></i> <a href="https://cyfrin.io" class="text-purple-400 hover:underline">Cyfrin Web 3 Security Courses</a></li>
+                    <li><i class="fas fa-graduation-cap text-purple-400"></i> <a href="https://smartcontractshacking.com" class="text-purple-400 hover:underline">Jonny Time's Smart Contract Course</a></li>
+                    <li><i class="fas fa-graduation-cap text-purple-400"></i> <a href="https://secureum.xyz" class="text-purple-400 hover:underline">Secureum Bootcamp</a></li>
+                    <li><i class="fas fa-graduation-cap text-purple-400"></i> <a href="https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide" class="text-purple-400 hover:underline">Ethereum Smart Contract Programming on Udemy</a></li>
+                    <li><i class="fas fa-flag-checkered text-purple-400"></i> <a href="https://ethernaut.openzeppelin.com/" class="text-purple-400 hover:underline">Ethernaut: Capture The Flag (CTF) for smart contract hacking</a></li>
+                    <li><i class="fas fa-bomb text-purple-400"></i> <a href="https://github.com/OpenZeppelin/damn-vulnerable-defi" class="text-purple-400 hover:underline">Damn Vulnerable DeFi</a></li>
+                    <li><i class="fas fa-flag-checkered text-purple-400"></i> <a href="https://capturetheether.com/" class="text-purple-400 hover:underline">Capture the Ether</a></li>
+                    <li><i class="fas fa-users text-purple-400"></i> Reddit: <span class="text-purple-400">r/ethdev, r/smartcontracts</span></li>
+                    <li><i class="fas fa-users text-purple-400"></i> <a href="https://ethereum.stackexchange.com" class="text-purple-400 hover:underline">Ethereum Stack Exchange</a></li>
+                    <li><i class="fas fa-blog text-purple-400"></i> <a href="https://blog.openzeppelin.com" class="text-purple-400 hover:underline">OpenZeppelin Blog</a></li>
+                    <li><i class="fas fa-blog text-purple-400"></i> <a href="https://blog.solidityscan.com" class="text-purple-400 hover:underline">SolidityScan Blog</a></li>
+                </ul>
+            </section>
+            <!-- Bug Bounty Platforms -->
+            <section class="cyber-card rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-cyber neon-glow mb-4 flex items-center gap-2"><i class="fas fa-bug text-green-400"></i> Bug Bounty Platforms</h2>
+                <ul class="space-y-3 text-lg">
+                    <li><i class="fas fa-bug text-green-400"></i> <a href="https://hackerone.com" class="text-green-400 hover:underline">HackerOne</a></li>
+                    <li><i class="fas fa-bug text-green-400"></i> <a href="https://bugcrowd.com" class="text-green-400 hover:underline">Bugcrowd</a></li>
+                    <li><i class="fas fa-bug text-green-400"></i> <a href="https://intigriti.com" class="text-green-400 hover:underline">Intigriti</a></li>
+                    <li><i class="fas fa-bug text-green-400"></i> <a href="https://immunefi.com" class="text-green-400 hover:underline">Immunefi: Focused on blockchain and smart contract bug bounties</a></li>
+                    <li><i class="fas fa-bug text-green-400"></i> <a href="https://hackenproof.com" class="text-green-400 hover:underline">HackenProof: Web 3 and blockchain-focused bug bounty platform</a></li>
+                </ul>
+            </section>
+            <!-- Audit Platforms -->
+            <section class="cyber-card rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-cyber neon-glow mb-4 flex items-center gap-2"><i class="fas fa-search text-cyan-400"></i> Audit Platforms & Firms</h2>
+                <ul class="space-y-3 text-lg">
+                    <li><i class="fas fa-search text-cyan-400"></i> <a href="https://code4rena.com" class="text-cyan-400 hover:underline">Code4rena</a></li>
+                    <li><i class="fas fa-search text-cyan-400"></i> <a href="https://sherlock.xyz" class="text-cyan-400 hover:underline">Sherlock</a></li>
+                    <li><i class="fas fa-search text-cyan-400"></i> <a href="https://cantina.xyz" class="text-cyan-400 hover:underline">Cantina</a></li>
+                    <li><i class="fas fa-search text-cyan-400"></i> <a href="https://trailofbits.com" class="text-cyan-400 hover:underline">Trail of Bits</a></li>
+                    <li><i class="fas fa-search text-cyan-400"></i> <a href="https://consensys.net/diligence" class="text-cyan-400 hover:underline">ConsenSys Diligence</a></li>
+                    <li><i class="fas fa-search text-cyan-400"></i> <a href="https://quantstamp.com" class="text-cyan-400 hover:underline">Quantstamp</a></li>
+                    <li><i class="fas fa-search text-cyan-400"></i> <a href="https://certik.com" class="text-cyan-400 hover:underline">CertiK</a></li>
+                </ul>
+            </section>
+            <!-- Audit & Bug Reports -->
+            <section class="cyber-card rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-cyber neon-glow mb-4 flex items-center gap-2"><i class="fas fa-file-alt text-cyan-400"></i> Audit & Bug Reports</h2>
+                <ul class="space-y-3 text-lg">
+                    <li><i class="fas fa-file-alt text-cyan-400"></i> <a href="https://solodit.xyz/" class="text-cyan-400 hover:underline">Bug reports on solodit</a></li>
+                    <li><i class="fas fa-file-alt text-cyan-400"></i> <a href="https://code4rena.com/reports" class="text-cyan-400 hover:underline">Code4rena Bug Reports</a></li>
+                    <li><i class="fas fa-file-alt text-cyan-400"></i> <a href="https://immunefi.com/immunefi-top-10/" class="text-cyan-400 hover:underline">Immunefi Top 10 Bug Reports</a></li>
+                    <li><i class="fas fa-file-alt text-cyan-400"></i> <a href="https://reports.immunefi.com" class="text-cyan-400 hover:underline">Immunefi Bug Report Database</a></li>
+                    <li><i class="fas fa-file-alt text-cyan-400"></i> <a href="https://github.com/pashov/audits" class="text-cyan-400 hover:underline">Pashov's Smart Contract Security Audits</a></li>
+                </ul>
+            </section>
+            <!-- Additional Resources -->
+            <section class="cyber-card rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-cyber neon-glow mb-4 flex items-center gap-2"><i class="fas fa-layer-group text-green-400"></i> Additional Resources</h2>
+                <ul class="space-y-3 text-lg">
+                    <li><i class="fab fa-youtube text-green-400"></i> <a href="https://www.youtube.com/@smartcontractprogrammer" class="text-green-400 hover:underline">Smart Contract Programmer (YouTube)</a></li>
+                    <li><i class="fab fa-youtube text-green-400"></i> <a href="https://www.youtube.com/@DappUniversity" class="text-green-400 hover:underline">Dapp University (YouTube)</a></li>
+                    <li><i class="fab fa-youtube text-green-400"></i> <a href="https://www.youtube.com/@EatTheBlocks" class="text-green-400 hover:underline">EatTheBlocks (YouTube)</a></li>
+                    <li><i class="fab fa-youtube text-green-400"></i> <a href="https://www.youtube.com/@PatrickAlphaC" class="text-green-400 hover:underline">Patrick Collins Courses (YouTube)</a></li>
+                    <li><i class="fab fa-youtube text-green-400"></i> <a href="https://www.youtube.com/@codeeater21" class="text-green-400 hover:underline">Code Eater (YouTube)</a></li>
+                    <li><i class="fas fa-podcast text-green-400"></i> <a href="https://zeroknowledge.fm" class="text-green-400 hover:underline">Zero Knowledge Podcast</a></li>
+                    <li><i class="fab fa-github text-green-400"></i> <a href="https://github.com/crytic/awesome-ethereum-security" class="text-green-400 hover:underline">Awesome Ethereum Security (GitHub)</a></li>
+                    <li><i class="fab fa-github text-green-400"></i> <a href="https://github.com/OpenZeppelin/damn-vulnerable-defi" class="text-green-400 hover:underline">Damn Vulnerable DeFi (GitHub)</a></li>
+                    <li><i class="fab fa-github text-green-400"></i> <a href="https://github.com/immunefi-team/Web3-Security-Library" class="text-green-400 hover:underline">Web3 Security Library (GitHub)</a></li>
+                    <li><i class="fas fa-robot text-green-400"></i> <a href="https://www.auditwizard.io" class="text-green-400 hover:underline">AuditWizard (AI Tool)</a></li>
+                    <li><i class="fas fa-robot text-green-400"></i> <a href="https://auditagent.nethermind.io" class="text-green-400 hover:underline">Audit Agent by Nethermind (AI Tool)</a></li>
+                    <li><i class="fas fa-robot text-green-400"></i> <a href="https://github.com/Picodes/4naly3er" class="text-green-400 hover:underline">4naly3er: Open-source smart contract analyzer (AI Tool)</a></li>
+                    <li><i class="fas fa-tools text-green-400"></i> <a href="https://github.com/crytic/slither" class="text-green-400 hover:underline">Slither (Security Tool)</a></li>
+                    <li><i class="fas fa-tools text-green-400"></i> <a href="https://github.com/ConsenSys/mythril" class="text-green-400 hover:underline">Mythril (Security Tool)</a></li>
+                    <li><i class="fas fa-tools text-green-400"></i> <a href="https://github.com/foundry-rs/foundry" class="text-green-400 hover:underline">Foundry (Security Tool)</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
     <!-- Donate Modal -->
     <div x-show="donateModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black bg-opacity-80" @click="donateModal = false"></div>
@@ -123,306 +244,50 @@
             </p>
         </div>
     </div>
-    <!-- Main Content -->
-    <main class="flex-1 py-16 px-4 max-w-6xl mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6">Learning Resources</h1>
-      <p class="text-lg text-text/70 mb-12">Enhance your cybersecurity skills with these curated resources for both Web2 and Web3 security.</p>
-      <!-- Web2 Security Section -->
-      <section class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-          <i data-feather="shield" class="h-8 w-8 text-primary"></i>
-          <h2 class="text-3xl font-bold text-text">Web 2 Security Resources</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Books -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="book-open" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Books</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span>The Web Application Hacker's Handbook by Dafydd Stuttard and Marcus Pinto</li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span>Hacking: The Art of Exploitation by Jon Erickson</li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span>OWASP Testing Guide (Free online resource)</li>
-            </ul>
-          </div>
-          <!-- Online Courses -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="monitor" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Online Courses</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://portswigger.net" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">PortSwigger Web Security Academy (Free)<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.udemy.com/course/bug-bounty-hunting-essentials" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Bug Bounty Hunting Essentials on Udemy<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.pluralsight.com/courses/web-security-testing-ethical-hacking" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Web Application Penetration Testing on Pluralsight<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- Practice Platforms -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="server" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Practice Platforms</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://hackthebox.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Hack The Box<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://tryhackme.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">TryHackMe<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/juice-shop/juice-shop" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">OWASP Juice Shop<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- Communities & Blogs -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="users" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Communities & Blogs</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://owasp.org" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">OWASP Foundation<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span>Reddit Communities: r/netsec, r/bugbounty</li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://hackerone.com/hacktivity" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">HackerOne Hacktivity (Public bug reports)<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- Web3 Security Section -->
-      <section class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-          <i data-feather="shield" class="h-8 w-8 text-primary"></i>
-          <h2 class="text-3xl font-bold text-text">Web 3 Security Resources</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Books -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="book-open" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Books</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span>Mastering Ethereum by Andreas M. Antonopoulos and Gavin Wood</li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span>Building Secure Smart Contracts by Chris Anatalio</li>
-            </ul>
-          </div>
-          <!-- Online Courses -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="monitor" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Online Courses</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://cyfrin.io" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Cyfrin Web 3 Security Courses<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://smartcontractshacking.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Jonny Time's Smart Contract Course<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://secureum.xyz" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Secureum Bootcamp<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Ethereum Smart Contract Programming on Udemy<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- Practice Platforms -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="server" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Practice Platforms</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://ethernaut.openzeppelin.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Ethernaut: Capture The Flag (CTF) for smart contract hacking<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/OpenZeppelin/damn-vulnerable-defi" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Damn Vulnerable DeFi<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://capturetheether.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Capture the Ether<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- Communities & Blogs -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="users" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Communities & Blogs</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://ethereum.stackexchange.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Ethereum Stack Exchange<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span>Reddit Communities: r/ethdev, r/smartcontracts</li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://blog.openzeppelin.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">OpenZeppelin Blog<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://blog.solidityscan.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">SolidityScan Blog<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- Bug Bounty Platforms -->
-      <section class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-          <i data-feather="shield" class="h-8 w-8 text-primary"></i>
-          <h2 class="text-3xl font-bold text-text">Bug Bounty Platforms</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Web2 Platforms -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="server" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Web 2 Platforms</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://hackerone.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">HackerOne<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://bugcrowd.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Bugcrowd<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://intigriti.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Intigriti<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- Web3 Platforms -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="server" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Web 3 Platforms</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://immunefi.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Immunefi: Focused on blockchain and smart contract bug bounties<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://hackenproof.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">HackenProof: Web 3 and blockchain-focused bug bounty platform<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- Audit Platforms -->
-      <section class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-          <i data-feather="shield" class="h-8 w-8 text-primary"></i>
-          <h2 class="text-3xl font-bold text-text">Audit Platforms</h2>
-        </div>
-        <div class="grid grid-cols-1 gap-8">
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="shield" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Audit Platforms & Firms</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://code4rena.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Code4rena<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://sherlock.xyz" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Sherlock<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://cantina.xyz" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Cantina<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://trailofbits.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Trail of Bits<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://consensys.net/diligence" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">ConsenSys Diligence<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://quantstamp.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Quantstamp<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://certik.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">CertiK<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- Audit & Bug Reports -->
-      <section class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-          <i data-feather="shield" class="h-8 w-8 text-primary"></i>
-          <h2 class="text-3xl font-bold text-text">Audit & Bug Reports</h2>
-        </div>
-        <div class="grid grid-cols-1 gap-8">
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="shield" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Audit & Bug Reports</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://solodit.xyz/" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Bug reports on solodit<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://code4rena.com/reports" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Code4rena Bug Reports<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://immunefi.com/immunefi-top-10/" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Immunefi Top 10 Bug Reports<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://reports.immunefi.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Immunefi Bug Report Database<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/pashov/audits" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Pashov's Smart Contract Security Audits<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- Additional Resources -->
-      <section class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-          <i data-feather="shield" class="h-8 w-8 text-primary"></i>
-          <h2 class="text-3xl font-bold text-text">Additional Resources</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- YouTube Channels -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="monitor" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">YouTube Channels</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.youtube.com/@smartcontractprogrammer" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Smart Contract Programmer<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.youtube.com/@DappUniversity" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Dapp University<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.youtube.com/@EatTheBlocks" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">EatTheBlocks<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.youtube.com/@PatrickAlphaC" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Patrick Collins Courses<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.youtube.com/@codeeater21" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Code Eater<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- Podcasts -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="mic" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Podcasts</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://zeroknowledge.fm" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Zero Knowledge Podcast<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- GitHub Repositories -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="github" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">GitHub Repositories</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/crytic/awesome-ethereum-security" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Awesome Ethereum Security<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/OpenZeppelin/damn-vulnerable-defi" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Damn Vulnerable DeFi<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/immunefi-team/Web3-Security-Library" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Web3 Security Library<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- AI Tools (merged section) -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="cpu" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">AI Tools</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://www.auditwizard.io" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">AuditWizard<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://auditagent.nethermind.io" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Audit Agent by Nethermind<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/Picodes/4naly3er" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">4naly3er: Open-source smart contract analyzer<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-          <!-- Security Tools -->
-          <div class="bg-background rounded-lg p-6 border border-white/10 hover:border-primary/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-feather="shield" class="text-primary"></i>
-              <h3 class="text-xl font-semibold text-text">Security Tools</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/crytic/slither" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Slither<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/ConsenSys/mythril" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Mythril<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-              <li class="text-text/70 flex gap-2 items-center"><span class="text-primary font-bold">•</span><a href="https://github.com/foundry-rs/foundry" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1">Foundry<i data-feather="external-link" class="h-4 w-4"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-    </main>
     <!-- Footer -->
-    <footer class="bg-background border-t border-primary/20 py-10 px-4 mt-auto">
-      <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="flex flex-col gap-2 text-center md:text-left">
-          <span class="font-heading text-xl text-primary">Sabana Foundation</span>
-          <span class="text-sm text-text/60">Web3 Cybersecurity Workspace & Social Impact</span>
-          <span class="text-xs text-text/40">© 2024 Sabana Foundation. All rights reserved.</span>
+    <footer class="bg-black border-t border-cyan-500 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="assets/sabana-logo.png" alt="SABANA" class="h-8 w-auto">
+                        <span class="font-cyber text-xl font-bold text-cyan-400">SABANA FOUNDATION</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Web3 Cybersecurity Workspace & Social Impact Foundation</p>
+                    <p class="text-sm text-gray-500">© 2025 SABANA Foundation. All rights reserved.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">SERVICES</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="audits.html" class="hover:text-cyan-400 transition-colors">Smart Contract Audits</a></li>
+                        <li><a href="whatwedo.html" class="hover:text-cyan-400 transition-colors">Bug Bounty Hunting</a></li>
+                        <li><a href="resources.html" class="hover:text-cyan-400 transition-colors">Security Education</a></li>
+                        <li><a href="resources.html" class="hover:text-cyan-400 transition-colors">Open-Source Tools</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">RESOURCES</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="blog.html" class="hover:text-cyan-400 transition-colors">Blog</a></li>
+                        <li><a href="resources.html" class="hover:text-cyan-400 transition-colors">Security Guides</a></li>
+                        <li><a href="impact.html" class="hover:text-cyan-400 transition-colors">Impact Reports</a></li>
+                        <li><a href="join.html" class="hover:text-cyan-400 transition-colors">Join Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">CONNECT</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="contact.html" class="hover:text-cyan-400 transition-colors">Contact Us</a></li>
+                        <li><a href="about.html" class="hover:text-cyan-400 transition-colors">About</a></li>
+                        <li><a href="privacy.html" class="hover:text-cyan-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-cyan-400 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="flex flex-col gap-2 items-center">
-          <div class="flex flex-wrap items-center justify-center gap-4 mb-2 footer-nav">
-            <a href="about.html" class="footer-link flex items-center gap-1"><i data-feather="info" class="footer-icon"></i>About</a>
-            <a href="blog.html" class="footer-link flex items-center gap-1"><i data-feather="edit-3" class="footer-icon"></i>Blog</a>
-            <a href="contact.html" class="footer-link flex items-center gap-1"><i data-feather="mail" class="footer-icon"></i>Contact</a>
-            <a href="privacy.html" class="footer-link flex items-center gap-1"><i data-feather="file-text" class="footer-icon"></i>Privacy Policy</a>
-            <a href="terms.html" class="footer-link flex items-center gap-1"><i data-feather="shield" class="footer-icon"></i>Terms</a>
-            <a href="https://twitter.com/" target="_blank" rel="noopener" class="footer-link flex items-center gap-1"><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M22.46 5.924c-.793.352-1.646.59-2.54.698a4.48 4.48 0 0 0 1.963-2.475 8.94 8.94 0 0 1-2.828 1.082A4.48 4.48 0 0 0 16.11 4c-2.485 0-4.5 2.014-4.5 4.5 0 .353.04.697.116 1.025C7.728 9.37 4.1 7.6 1.67 4.905c-.387.664-.61 1.437-.61 2.26 0 1.56.795 2.936 2.005 3.744-.738-.023-1.432-.226-2.04-.565v.057c0 2.18 1.55 4.002 3.604 4.418-.377.102-.775.157-1.185.157-.29 0-.568-.028-.84-.08.57 1.775 2.22 3.067 4.18 3.1A9.01 9.01 0 0 1 2 19.54a12.73 12.73 0 0 0 6.88 2.017c8.26 0 12.78-6.84 12.78-12.77 0-.195-.004-.39-.013-.583A9.18 9.18 0 0 0 24 4.59a8.98 8.98 0 0 1-2.54.697z" fill="#00acee"/></svg>Twitter</a>
-          </div>
-          <form class="flex gap-2" onsubmit="event.preventDefault(); alert('Subscribed!');">
-            <input type="email" required placeholder="Your email" class="px-3 py-2 rounded-l bg-background border border-primary/30 text-text focus:outline-none" />
-            <button type="submit" class="px-4 py-2 bg-primary text-background rounded-r font-semibold hover:bg-accent transition">Subscribe</button>
-          </form>
-          <button onclick="document.getElementById('donate-modal')?.style.display='flex';" class="px-4 py-2 bg-primary text-background rounded font-semibold hover:bg-accent transition mt-2">Donate</button>
-          <div class="mt-2 text-xs text-text/60 flex items-center gap-2">
-            <span>Wallet (for transparency):</span>
-            <span class="font-mono select-all">0x1234...abcd</span>
-            <button onclick="navigator.clipboard.writeText('0x1234...abcd');" class="ml-1 text-primary hover:text-accent" title="Copy"><i data-feather="copy"></i></button>
-          </div>
-        </div>
-      </div>
     </footer>
     <script>
       feather.replace();
-      AOS.init({ once: true, duration: 700, offset: 80 });
     </script>
   </body>
 </html> 
