@@ -489,10 +489,76 @@
     <!-- Donate Modal -->
     <div x-show="donateModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black bg-opacity-80" @click="donateModal = false"></div>
-        <div class="cyber-card rounded-2xl p-8 max-w-md w-full relative">
+        <div class="cyber-card rounded-2xl p-8 max-w-md w-full relative" x-data='{
+            tokens: [
+                { symbol: "BTC", name: "Bitcoin", icon: "fab fa-btc" },
+                { symbol: "ETH", name: "Ethereum", icon: "fab fa-ethereum" },
+                { symbol: "USDT", name: "Tether", icon: "fas fa-dollar-sign" },
+                { symbol: "USDC", name: "USD Coin", icon: "fas fa-dollar-sign" },
+                { symbol: "BNB", name: "Binance Coin", icon: "fas fa-coins" },
+                { symbol: "SOL", name: "Solana", icon: "fas fa-bolt" },
+                { symbol: "MATIC", name: "Polygon", icon: "fas fa-gem" },
+                { symbol: "TRX", name: "Tron", icon: "fas fa-bolt" },
+                { symbol: "DOGE", name: "Dogecoin", icon: "fab fa-dog" },
+                { symbol: "ADA", name: "Cardano", icon: "fas fa-circle" },
+                { symbol: "DOT", name: "Polkadot", icon: "fas fa-circle" },
+                { symbol: "AVAX", name: "Avalanche", icon: "fas fa-mountain" },
+                { symbol: "SHIB", name: "Shiba Inu", icon: "fas fa-dog" },
+                { symbol: "LTC", name: "Litecoin", icon: "fas fa-coins" },
+                { symbol: "XRP", name: "XRP", icon: "fas fa-water" }
+            ],
+            networks: [
+                "Ethereum", "Binance Smart Chain", "Tron", "Solana", "Polygon", "Avalanche", "Cardano", "Polkadot", "Dogecoin", "Litecoin", "XRP Ledger"
+            ],
+            selectedToken: "BTC",
+            selectedNetwork: "Ethereum",
+            addressCopied: false,
+            getAddress() {
+                // Placeholder: update with real addresses later
+                return "PLACEHOLDER_ADDRESS";
+            },
+            copyAddress() {
+                navigator.clipboard.writeText(this.getAddress());
+                this.addressCopied = true;
+                setTimeout(() => this.addressCopied = false, 1500);
+            }
+        }'>
             <button @click="donateModal = false" class="absolute top-4 right-4 text-gray-400 hover:text-cyan-400">
                 <i class="fas fa-times text-xl"></i>
             </button>
+            <h3 class="text-2xl font-cyber font-bold text-white mb-6 text-center">Support Our Mission to Save Lives</h3>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-300 mb-2">Select Cryptocurrency & Network</label>
+                <div class="flex gap-2">
+                    <div class="relative flex-1">
+                        <select x-model="selectedToken" class="p-3 pr-10 rounded-lg font-semibold transition-colors border border-gray-700 bg-gray-800 text-white w-full appearance-none">
+                            <template x-for="token in tokens" :key="token.symbol">
+                                <option :value="token.symbol" x-text="token.name + ' (' + token.symbol + ')'" />
+                            </template>
+                        </select>
+                        <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><i :class="tokens.find(t => t.symbol === selectedToken)?.icon || 'fas fa-coins'" class="text-cyan-400"></i></span>
+                    </div>
+                    <div class="relative flex-1">
+                        <select x-model="selectedNetwork" class="p-3 rounded-lg font-semibold transition-colors border border-gray-700 bg-gray-800 text-white w-full appearance-none">
+                            <template x-for="network in networks" :key="network">
+                                <option :value="network" x-text="network" />
+                            </template>
+                        </select>
+                        <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><i class="fas fa-network-wired text-cyan-400"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-300 mb-2">Wallet Address</label>
+                <div class="flex items-center space-x-2">
+                    <input type="text" readonly :value="getAddress()" class="flex-1 p-3 border border-gray-700 rounded-lg bg-gray-800 text-sm text-cyan-400">
+                    <button @click="copyAddress()" class="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors border border-gray-700" :aria-label="addressCopied ? 'Copied!' : 'Copy address'">
+                        <i class="fas fa-copy text-cyan-400" x-show="!addressCopied"></i>
+                        <span x-show="addressCopied" class="text-green-400 font-bold text-xs">Copied!</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-6">
             
             <h3 class="text-2xl font-cyber font-bold text-white mb-6">SUPPORT OUR MISSION TO SAVE LIVES</h3>
             
